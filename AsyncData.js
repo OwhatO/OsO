@@ -1,5 +1,5 @@
 
-const REJECTED= Symbol( 'rejected', );
+const REJECTED= Symbol( 'REJECTED', );
 
 export default class AsyncData extends Promise
 {
@@ -31,7 +31,7 @@ export default class AsyncData extends Promise
 			return this[REJECTED];
 	}
 	
-	set rejected( rejected, )
+	set rejected( rejected )
 	{
 		this[REJECTED]= rejected
 	}
