@@ -1,11 +1,13 @@
 OsO
 ================================
 
-There are some tools, polyfills of basic support.
+There are some tools, polyfills of basic support. 
+
+
 
 # async.js
 
-This file provide some useful tools for async coding. All of these are global interface.
+This file provide some useful tools for async coding. All of these are global interface. 
 
 ## window.timeout
 
@@ -41,6 +43,8 @@ async function animation()
 
 ```
 
+
+
 # AsyncData
 
 AsyncData is a class extends Promise, with temporary value and rejected fallbalk. 
@@ -52,7 +56,7 @@ AsyncData is a class extends Promise, with temporary value and rejected fallbalk
 The constructor of AsyncData accepts 3 parameters: 
 The first can be a promise or a function like constructor of Promise accepted; 
 The second is a temporary value for the time before the Promise resolved or rejected; 
-The last can be a value or a function returns a value in case of the Promise rejected.
+The last can be a value or a function returns a value in case of the Promise rejected. 
 
 ```js
 import AsyncData from 'https://oxo.fenzland.com/OsO/0.1/AsyncData.js';
@@ -122,3 +126,201 @@ console.log( qux, ); //  -1
 
 After import the AsyncData module, then, catch and finally of Promise are overridden. 
 And there is a global interface `window.AsyncData` registered. 
+
+
+
+# Interface
+
+A implement of "duck type" interface. 
+
+## Usage
+
+```js
+import Interface from 'https://oxo.fenzland.com/OsO/0.1/Interface.js';
+
+const IBalloon= new Interface( {
+	size: Number,
+	color: String,
+	float: Function,
+	bang: Function,
+}, );
+
+const foo= [];
+const bar= true;
+const baz= {
+	size: '5',
+	color: 'green',
+	float(){},
+	bang(){ this.size= 0; },
+}
+const qux= {
+	size: 5,
+	color: 'green',
+	float(){},
+	bang(){ this.size= 0; },
+}
+const quz= [];
+quz.size= 5;
+quz.color= 'green';
+quz.float= ()=> {};
+quz.bang= ()=> {};
+
+console.log( foo instanceof IBalloon, ); // false
+console.log( bar instanceof IBalloon, ); // false
+console.log( baz instanceof IBalloon, ); // false
+console.log( qux instanceof IBalloon, ); // true
+console.log( quz instanceof IBalloon, ); // true
+
+
+```
+
+
+
+# Storage
+
+A JSON base, channelized local or session storage api wrapper. 
+
+## Usage
+
+```js
+import Storage from 'https://oxo.fenzland.com/OsO/0.1/Storage.js';
+
+const storageA= new Storage( localStorage, 'channelA', );
+const storageB= new Storage( localStorage, 'channelB', );
+
+storageA.set( 'foo', 5, );
+storageB.set( 'foo', { name: 'Fool', age: 54, }, );
+
+console.log( storageA.get( 'foo', ), );      // 5
+console.log( storageB.get( 'foo', ).name, ); // Fool
+console.log( storageA.has( 'foo', ), );      // true
+console.log( storageA.has( 'bar', ), );      // false
+console.log( storageA.get( 'bar', ), );      // null
+console.log( storageA.get( 'bar', 22, ), );  // 22
+
+storageA.clear();
+
+console.log( storageA.has( 'foo', ), );      // false
+console.log( storageB.has( 'foo', ), );      // true
+
+```
+
+
+
+# RePromise
+
+A promise can only resolve or reject once. A repromise can resolve or reject multi-times. 
+
+## Usage
+
+```js
+import RePromise from 'https://oxo.fenzland.com/OsO/0.1/RePromise.js';
+
+const repromise= new RePromise( ( resolve, reject, )=> { /* ... */ }, );
+
+repromise.then( ()=> {}, );
+repromise.then( ()=> {}, ()=> {}, );
+repromise.catch( ()=> {}, );
+repromise.finally( ()=> {}, );
+
+repromise.thenOnce( ()=> {}, );
+repromise.thenOnce( ()=> {}, ()=> {}, );
+repromise.catchOnce( ()=> {}, );
+repromise.finallyOnce( ()=> {}, );
+
+```
+
+
+
+# Indicator
+
+An indicator is a promise that never resolve or reject itself, but you can indicate what to do. 
+
+## Usage
+
+```js
+import Indicator from 'https://oxo.fenzland.com/OsO/0.1/Indicator.js';
+
+const indicator= new Indicator();
+
+indicator.then( ()=> {}, );
+indicator.then( ()=> {}, ()=> {}, );
+indicator.catch( ()=> {}, );
+indicator.finally( ()=> {}, );
+
+if( youAreHappy() )
+	indicator.resolve( 'happiness', );
+else
+	indicator.reject( 'unhappiness' );
+
+```
+
+
+
+# ReIndicator
+
+Promise -> Indicator ∽ RePromise -> ReIndicator
+
+
+
+# path.js
+
+In Node.js, there is a standard library named "path", and this is the same thing for web enviroment. 
+
+## Apis
+
+```js
+// Apis same as path of Node.js
+
+basename( path, );
+dirname( path, );
+extname( path, );
+resolve( [...paths], );
+
+
+// Apis base on current path.
+
+current();            // returns the full url of current js file.
+currentPath();        // returns the path of the url of current js file.
+currentDir();         // returns the dirname of the path of the url of current js file.
+
+```
+
+## Usage
+
+```js
+import { current, currentPath, currentDir, basename, dirname, extname, resolveHere, resolve, } from 'https://oxo.fenzland.com/OsO/0.1/path.js';
+
+// Supposing that here is https://oxo.fenzland.com/utopia/goats-wool/404.js
+
+console.log( current(), );                   // https://oxo.fenzland.com/utopia/goats-wool/404.js
+console.log( currentPath(), );               // /utopia/goats-wool/404.js
+console.log( currentDir(), );                // /utopia/goats-wool
+console.log( resolve( '/foo.js' ), );        // /foo.js
+console.log( resolve( 'foo.js' ), );         // /utopia/goats-wool/foo.js
+console.log( resolve( '../foo.js' ), );      // /utopia/foo.js
+
+
+```
+
+
+
+# Pointer
+
+ECMAScript dose not support pointer, but sometimes we need it. So class Pointer is here. 
+Unfortunately, it only support point to a property of object, but not a variable. 
+
+## Usage
+
+```js
+import Pointer from 'https://oxo.fenzland.com/OsO/0.1/Pointer.js';
+
+const object= { foo: 2, bar: 5, };
+
+const pointer= new Pointer( object, 'foo' );
+
+console.log( pointer.value, );   // 2
+pointer.value= 8;
+console.log( object.foo, );      // 8
+
+```
