@@ -43,30 +43,48 @@ export function extname( path, )
 		return `.${ext}`;
 }
 
-export function resolveHere( path, )
+export function resolve( ...paths )
 {
-	return resolve( dirname( new URL( pathFromErrorStack(), ).pathname, ), path, );
+	standardizeResolvingPaths( paths, );
+	
+	return paths
+		.map( path=> path.split( '/', ), )
+		.reduce( ( base, path, )=> {
+			while( true )
+				if( path[0]==='..' )
+					base.pop(), path.shift();
+				else
+				if( path[0]==='.' )
+					path.shift();
+				else
+					break;
+			return base.concat( path, );
+		}, [], )
+		.join( '/', )
+	;
 }
 
-export function resolve( base, path, )
+function standardizeResolvingPaths( paths, )
 {
-	path= path.split( '/', );
-	base= base.split( '/', );
+	for( let i= paths.length - 1; i>=0; --i )
+		if( paths[i][0]==='/' )
+			return (paths.splice( 0, i, ), undefined);
 	
-	while( true )
-		if( path[0]==='..' )
-			base.pop(), path.shift();
-		else
-		if( path[0]==='.' )
-			path.shift();
-		else
-			break;
-	
-	return base.concat( path, ).join( '/', );
+	paths.unshift( dirname( new URL( pathFromErrorStack(3), ).pathname, ), );
 }
 
+export default {
+	current,
+	currentPath,
+	currentDir,
+	basename,
+	dirname,
+	extname,
+	resolve,
+};
 
-function pathFromErrorStack()
+
+function pathFromErrorStack( stackIndex=2, )
 {
-	return new Error().stack.split( '\n', ).map( x=> x.match( /(https?:\/\/.+):\d+:\d+/, ), ).filter( x=> x, )[2][1];
+	return new Error().stack.split( '\n', ).map( x=> x.match( /(https?:\/\/.+):\d+:\d+/, ), ).filter( x=> x, )[stackIndex][1];
 }
