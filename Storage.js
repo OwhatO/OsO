@@ -8,7 +8,7 @@ export default class Storage
 {
 	constructor( native_storage, prefix, )
 	{
-		this[PREFIX]= prefix;
+		this[PREFIX]= `☰${prefix}☷`;
 		this[NATIVE_STORAGE]= native_storage;
 	}
 	
@@ -21,22 +21,16 @@ export default class Storage
 	
 	get( key, defaults=null, )
 	{
-		return (
-			this.has( key, )
-			? JSON.parse( this[NATIVE_STORAGE].getItem( this[WRAP_KEY]( key, ), ), )
-			: defaults
-		);
+		const json= this[NATIVE_STORAGE].getItem( this[WRAP_KEY]( key, ), );
+		
+		return (json? JSON.parse( json, ) : defaults);
 	}
 	
 	has( key, )
 	{
-		const wrappedKey= this[WRAP_KEY]( key, );
+		const json= this[NATIVE_STORAGE].getItem( this[WRAP_KEY]( key, ), );
 		
-		for( let i= this[NATIVE_STORAGE].length-1; i>=0; --i )
-			if( wrappedKey===this[NATIVE_STORAGE].key( i, ) )
-				return true;
-		
-		return false;
+		return !!json;
 	}
 	
 	del( key, )
@@ -50,18 +44,18 @@ export default class Storage
 		{
 			let key= this[NATIVE_STORAGE].key( i, );
 
-			if( [OWNS_KEY]( key, ) )
+			if( this[OWNS_KEY]( key, ) )
 				this[NATIVE_STORAGE].removeItem( key, );
 		}
 	}
 	
 	[WRAP_KEY]( key, )
 	{
-		return `${this[PREFIX]}+${key}`;
+		return `${this[PREFIX]}${key}`;
 	}
 	
 	[OWNS_KEY]( key, )
 	{
-		return `${key}`.slice( 0, this[PREFIX].length, ) === prefix;
+		return `${key}`.slice( 0, this[PREFIX].length, ) === this[PREFIX];
 	}
 }
