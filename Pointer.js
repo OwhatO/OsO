@@ -20,20 +20,26 @@ export default class Pointer
 			throw 'A pointer must base on a object.';
 		
 		this[BASE]= base;
-		pointToKey.call( this, undefined, );
+		this.pointToKey( undefined, );
 	}
 	
 	pointTo( base, key, )
 	{
 		this.baseOn( base, );
 		
-		pointToKey.call( this, key, );
+		this.pointToKey( key, );
+	}
+	
+	pointToKey( key, )
+	{
+		this.key= key;
+		this[POINTING]= (key !== undefined);
 	}
 	
 	pointToMember( key, )
 	{
 		if(!( this[POINTING] ))
-			return pointToKey.call( this, key, );
+			return this.pointToKey( key, );
 		
 		if(!( this[BASE][this.key] instanceof Object ))
 			this[BASE][this.key]= {};
@@ -74,12 +80,6 @@ export default class Pointer
 	{
 		// Do nothing.
 	}
-}
-
-function pointToKey( key, )
-{
-	this.key= key;
-	this[POINTING]= (key !== undefined);
 }
 
 function checkPointing()
