@@ -3,9 +3,9 @@ const PROTO= Symbol( 'PROTO', );
 
 export default class Interface
 {
-	constructor( proto, )
+	constructor( ...protos )
 	{
-		this[PROTO]= proto;
+		this[PROTO]= Object.assign( {}, ...protos.map( proto=> proto[PROTO]||proto, ), );
 	}
 	
 	[Symbol.hasInstance]( instance, )
