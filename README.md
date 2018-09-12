@@ -135,6 +135,8 @@ A implement of "duck type" interface.
 
 ## Usage
 
+### Basic
+
 ```js
 import Interface from 'https://oxo.fenzland.com/OsO/0.1/Interface.js';
 
@@ -171,6 +173,50 @@ console.log( baz instanceof IBalloon, ); // false
 console.log( qux instanceof IBalloon, ); // true
 console.log( quz instanceof IBalloon, ); // true
 
+```
+
+### Nesting
+
+```js
+import Interface from 'https://oxo.fenzland.com/OsO/0.1/Interface.js';
+
+const IFinger= new Interface( {
+	length: Number,
+}, );
+
+const IHand= new Interface( {
+	thumb: IFinger,
+	forefinger: IFinger,
+	medius: IFinger,
+	ring_finger: IFinger,
+	pinkie: IFinger,
+}, );
+
+```
+
+### Inheriting
+
+```js
+import Interface from 'https://oxo.fenzland.com/OsO/0.1/Interface.js';
+
+const IPerson= new Interface( {
+	age: Number,
+	gender: String,
+}, );
+
+const ITeacher= new Interface( IPerson, {
+	course: String,
+	teaching_age: Number,
+}, );
+
+const IWolf= new Interface( {
+	howl: Function,
+	hunt: Function,
+}, );
+
+const IWerewolf= new Interface( IPerson, IWolf, {
+	transform: Function,
+}, );
 
 ```
 
