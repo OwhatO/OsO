@@ -68,7 +68,7 @@ if(!( Object.entries ))
 				result.push( [ key, object[key], ], )
 			
 			return result;
-		}
+		},
 	}, );
 }
 
@@ -83,6 +83,6 @@ if(!( Object.values ))
 				result.push( object[key], )
 			
 			return result;
-		}
+		},
 	}, );
 }
