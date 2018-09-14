@@ -1,7 +1,13 @@
 
 export function current()
+
 {
 	return pathFromErrorStack();
+}
+
+export function traceBack( back=1, )
+{
+	return pathFromErrorStack( 2 - - back, );
 }
 
 export function currentPath()
