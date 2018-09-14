@@ -86,3 +86,22 @@ if(!( Object.values ))
 		},
 	}, );
 }
+
+if(!( Map.prototype.achieve ))
+{
+	Object.defineProperty( Map.prototype, 'achieve', {
+		value( key, maker, )
+		{
+			if( this.has( key, ) )
+				return this.get( key, );
+			else
+			{
+				const value= maker();
+				
+				this.set( key, value, );
+				
+				return value;
+			}
+		},
+	}, );
+}
