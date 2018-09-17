@@ -90,17 +90,18 @@ if(!( Object.values ))
 if(!( Map.prototype.achieve ))
 {
 	Object.defineProperty( Map.prototype, 'achieve', {
-		value( key, maker, )
+		value( key, fallback, )
 		{
 			if( this.has( key, ) )
 				return this.get( key, );
 			else
 			{
-				const value= maker();
+				if( fallback instanceof Function )
+					fallback= fallback();
 				
-				this.set( key, value, );
+				this.set( key, fallback, );
 				
-				return value;
+				return fallback;
 			}
 		},
 	}, );
