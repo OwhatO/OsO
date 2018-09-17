@@ -30,7 +30,20 @@ export default class Storage
 	{
 		const json= this[NATIVE_STORAGE].getItem( this[WRAP_KEY]( key, ), );
 		
-		return !!json;
+		return json!=null;
+	}
+	
+	achieve( key, fallback, )
+	{
+		const json= this[NATIVE_STORAGE].getItem( this[WRAP_KEY]( key, ), );
+		
+		if( json!=null )
+			return JSON.parse( json, );
+		
+		if( fallback instanceof Function )
+			fallback= fallback();
+		
+		return this.set( key, fallback, );
 	}
 	
 	del( key, )
