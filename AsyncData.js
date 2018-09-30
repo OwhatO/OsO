@@ -45,7 +45,7 @@ window.AsyncData= AsyncData;
 	Promise.prototype.then= function( onResolve, onReject=undefined, temp=undefined, rejected=undefined, ) {
 		
 		if(!( onReject instanceof Function ))
-			temp= onReject, rejected= temp;
+			rejected= temp, temp= onReject;
 		
 		if( temp===undefined && rejected===undefined )
 			return thenOrig.call( this, onResolve, onReject, );
