@@ -370,3 +370,44 @@ pointer.value= 8;
 console.log( object.foo, );      // 8
 
 ```
+
+
+# Privatizer
+
+Before we can use #private property, we can use this module to make properties private. 
+This module is collect from [JsPr](https://github.com/Fenzland/JsPr). 
+
+## Usage
+
+```js
+import makePrivatizer from 'https://oxo.fenzland.com/OsO/0.1/privatizer.js';
+
+const { _, $, }= makePrivatizer();
+
+class Foo
+{
+	constructor( pub, pri, )
+	{
+		this.pub= pub;
+		
+		// access to a private property
+		_(this).pri= pri;
+		
+		// call a private method
+		_(this).init();
+	}
+}
+
+// define a private method
+_(Foo.prototype).init= function(){
+	
+	// access to a private property in private method
+	this.pri;
+	
+	// access to a public property in private method
+	$(this).pub;
+};
+
+// if you don't like _ and $
+const { _:toPrivate, $:toPublic, }= makePrivatizer();
+```
