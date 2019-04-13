@@ -97,5 +97,5 @@ export default {
 
 function pathFromErrorStack( stackIndex=2, )
 {
-	return new Error().stack.split( '\n', ).map( x=> x.match( /(https?:\/\/.+):\d+:\d+/, ), ).filter( x=> x, )[stackIndex][1];
+	return new Error().stack.split( '\n', ).map( x=> x.match( /((?:https?|file|data):.+):\d+:\d+/, ), ).filter( x=> x, )[stackIndex][1];
 }
