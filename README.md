@@ -9,7 +9,7 @@ There are some tools, polyfills of basic support.
 
 This file provide some useful tools for async coding. All of these are global interface. 
 
-## window.timeout
+## globalThis.timeout
 
 ```js
 import 'https://oxo.fenzland.com/OsO/0.1/async.js';
@@ -26,7 +26,7 @@ async function timer()
 
 ```
 
-## window.nextFrame
+## globalThis.nextFrame
 
 ```js
 import 'https://oxo.fenzland.com/OsO/0.1/async.js';
@@ -125,7 +125,7 @@ console.log( qux, ); //  -1
 ## Side effects
 
 After import the AsyncData module, then, catch and finally of Promise are overridden. 
-And there is a global interface `window.AsyncData` registered. 
+And there is a global interface `globalThis.AsyncData` registered. 
 
 
 

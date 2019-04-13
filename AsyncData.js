@@ -37,7 +37,7 @@ export default class AsyncData extends Promise
 	}
 }
 
-window.AsyncData= AsyncData;
+globalThis.AsyncData= AsyncData;
 
 {
 	const thenOrig= Promise.prototype.then;
