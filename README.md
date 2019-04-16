@@ -411,3 +411,18 @@ _(Foo.prototype).init= function(){
 // if you don't like _ and $
 const { _:toPrivate, $:toPublic, }= makePrivatizer();
 ```
+
+
+
+# Encoder
+
+Encode and decode with singletons of TextEncoder and TextDecoder.
+
+## Usage
+
+```js
+import { encode, decode, } from 'https://oxo.fenzland.com/OsO/0.1/text-encoder.js';
+
+const array= encode( 'Hello World', );
+const string= decode( array, );
+```
