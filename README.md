@@ -440,3 +440,39 @@ import deepAssign from 'https://oxo.fenzland.com/OsO/0.1/deepAssign.js';
 
 deepAssign( target, source0, source1, ...moreSources, );
 ```
+
+
+
+# Regex Generator
+
+Write complex regex in a readable way.
+
+## Usage
+
+```js
+import * as rg from 'https://oxo.fenzland.com/OsO/0.1/regex-generator.js';
+
+const generator= rg.join(
+	rg.begin,
+	rg.or( 'orange', 'apple', ),
+	':',
+	rg.whiteSpace.noneOrMore(),
+	rg.capture(
+		rg.oneOrMore( '0', ),
+		rg.digit.oneOrMore(),
+		rg.group( '-', rg.digit.oneOrMore(), ).noneOrOne(),
+	),
+	/\s+/,
+	rg.named( 'link',
+		'http',
+		noneOrOne( 's', ),
+		'://',
+		rg.any.noneOrMore(),
+	)
+	rg.end,
+);
+const regex= generator.toRegExp();
+/^(?:orange|apple):\s*(0+\d+(?:\-\d+)?)\s+(?<link>https?:\/\/.*)$/
+const globalRegex= generator.toRegExp( 'g', );
+/^(?:orange|apple):\s*(0+\d+(?:\-\d+)?)\s+(?<link>https?:\/\/.*)$/g
+```
