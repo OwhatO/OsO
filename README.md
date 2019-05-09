@@ -426,3 +426,17 @@ import { encode, decode, } from 'https://oxo.fenzland.com/OsO/0.1/text-encoder.j
 const array= encode( 'Hello World', );
 const string= decode( array, );
 ```
+
+
+
+# Deep Assign
+
+Deep copy version of Object.assign.
+
+## Usage
+
+```js
+import deepAssign from 'https://oxo.fenzland.com/OsO/0.1/deepAssign.js';
+
+deepAssign( target, source0, source1, ...moreSources, );
+```
