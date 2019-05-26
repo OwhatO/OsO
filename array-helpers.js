@@ -38,3 +38,21 @@ export function multipleReduce( { compare, proceed, init=undefined, }, ...arrays
 		value= proceed( value, item, n, i, arrays[n], arrays, );
 	}
 }
+
+/**
+ * Split arrays to distinct size tuples
+ * 
+ * @param array []<any>
+ * @param size  (number)
+ * 
+ * @return [][ ...<any>, ]
+ */
+export function array2tuples( array, size, )
+{
+	const result= [];
+	
+	for( let i= 0; i < array.length; i+= size )
+		result.push( array.slice( i, i - - size, ), );
+	
+	return result;
+}
