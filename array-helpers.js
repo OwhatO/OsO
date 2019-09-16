@@ -31,7 +31,7 @@ export function multipleReduce( { compare, proceed, init=undefined, }, ...arrays
 	while( indexes.some( ( i, n, )=> i < arrays[n].length, ) )
 	{
 		const candidates= arrays.reduce( ( candidates, array, n, )=> (indexes[n] < array.length && candidates.push( { n, value:array[indexes[n]], }, ), candidates), [], );
-		const n= candidates.length === 1? candidates[0].n: candidates.reduce( ( x, y, )=> compare( x.value, y.value, x.n, y.n, )? x: y, ).n;
+		const n= candidates.length === 1? candidates[0].n: candidates.reduce( ( x, y, )=> compare( x.value, y.value, x.n, y.n, )? x: y, candidates.shift(), ).n;
 		const i= indexes[n]++;
 		const item= arrays[n][i];
 		
